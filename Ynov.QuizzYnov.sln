@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynov.QuizzYnov", "Ynov.QuizzYnov\Ynov.QuizzYnov.csproj", "{BC239BF9-445B-4E5D-95B4-C94BE5377DC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC239BF9-445B-4E5D-95B4-C94BE5377DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC239BF9-445B-4E5D-95B4-C94BE5377DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC239BF9-445B-4E5D-95B4-C94BE5377DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC239BF9-445B-4E5D-95B4-C94BE5377DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
