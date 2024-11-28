@@ -8,4 +8,6 @@ public interface IQuizService
      IEnumerable<Quiz> getAll();
      Quiz GetId(Guid id);
      IEnumerable<Question> GetQuestionById(Guid id);
+     Category GetQuizCategoryById(Guid id);
+
 }

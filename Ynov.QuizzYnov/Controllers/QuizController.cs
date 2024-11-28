@@ -12,11 +12,13 @@ public class QuizController : ControllerBase
 {
     private readonly IQuizService _service;
     private readonly QuizMapper _mapper;
+    private readonly CategoryMapper _categoryMapper;
 
-    public QuizController(IQuizService service, QuizMapper mapper)
+    public QuizController(IQuizService service, QuizMapper mapper,CategoryMapper categoryMapper)
     {
         _service = service;
         _mapper = mapper;
+        _categoryMapper = categoryMapper;
     }
 
     [HttpGet(Name = "GetQuiz")]
@@ -45,4 +47,16 @@ public class QuizController : ControllerBase
         if (dtoQuestion == null) return BadRequest("Question not found");
         return Ok(dtoQuestion);
     }
+
+    [HttpGet("{id}/category")]
+    [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+    public IActionResult GetQuizCategoryById(Guid id)
+    {
+        Category category = _service.GetQuizCategoryById(id);
+        if (category == null) return BadRequest("Category not found");
+         CategoryDto categoryDto = _categoryMapper.ToDto(category);
+       
+        return Ok(categoryDto);
+    }
+    
 }
