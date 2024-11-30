@@ -2,9 +2,9 @@
 
 namespace Ynov.QuizzYnov.Business.Services;
 
-public class CategoryService
+public class CategoryService : ICategoryService
 {
-    private List<Category> _categories = new List<Category>
+    private readonly List<Category> _categories = new List<Category>
     {
         new Category
         {
@@ -32,8 +32,14 @@ public class CategoryService
         return _categories;
     }
 
-    public  Category GetCategoryById(Guid id)
+    public Category GetCategoryById(Guid id)
     {
-        return _categories.FirstOrDefault(x => x.Id == id);
+        Category? category = _categories.FirstOrDefault(x => x.Id == id);
+        if (category == null)
+        {
+            throw new InvalidOperationException("Category not found");
+        }
+
+        return category;
     }
 }

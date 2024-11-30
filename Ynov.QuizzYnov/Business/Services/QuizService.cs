@@ -1,5 +1,4 @@
 ﻿using Ynov.QuizzYnov.Business.Models;
-
 namespace Ynov.QuizzYnov.Business.Services;
 
 public class QuizService : IQuizService
@@ -8,7 +7,7 @@ public class QuizService : IQuizService
     {
         new Quiz
         {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e7b5"),
+            Id = new Guid("f9cfdd6d-6268-42ec-a624-a888f990e7b5"),
             Category =
                 new Category
                 {
@@ -20,9 +19,10 @@ public class QuizService : IQuizService
             Description = "ASP .NET Core 2.0 Quiz",
             Name = "Architect",
             CreateAt = DateTime.Now.ToLocalTime()
-        },  new Quiz
+        },
+        new Quiz
         {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e7b5"),
+            Id = new Guid("f9cfdd6d-6264-42ec-a624-a888f990e7b5"),
             Category =
                 new Category
                 {
@@ -34,9 +34,10 @@ public class QuizService : IQuizService
             Description = "ASP .NET Core 2.0 Quiz",
             Name = "Dev back M1",
             CreateAt = DateTime.Now.ToLocalTime()
-        }, new Quiz
+        },
+        new Quiz
         {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e7b5"),
+            Id = new Guid("f9cfdd6d-6267-42e5-a624-a888f990e7b5"),
             Category =
                 new Category
                 {
@@ -52,22 +53,46 @@ public class QuizService : IQuizService
     };
 
 
-    public IEnumerable<Quiz> getAll()
+    public IEnumerable<Quiz> GetAll()
     {
         return _quizList;
     }
 
-    public Quiz? GetId(Guid id)
+    public Quiz GetId(Guid id)
     {
-        return _quizList.Find(quiz => quiz.Id == id);
+        Quiz? quiz = _quizList.Find(quiz => quiz.Id == id);
+
+        if (quiz == null)
+        {
+            var error = new Error()
+            {
+                ErrorCode = "NotFound",
+                Message = $"Quiz not found for id: '{id}'"
+            };
+            throw new InvalidOperationException(error.Message);
+        }
+
+        return quiz;
     }
 
     public IEnumerable<Question> GetQuestionById(Guid id)
     {
         return GetId(id).Questions;
     }
+
     public Category GetQuizCategoryById(Guid id)
     {
-        return _quizList.Find(quiz => quiz.Id == id).Category;
+        Category? category = _quizList.Find(quiz => quiz.Id == id)?.Category;
+        if (category == null)
+        {
+            var error = new Error()
+            {
+                ErrorCode = "NotFound",
+                Message = $"Category not found for id: '{id}'"
+            };
+            throw new InvalidOperationException(error.Message);
+        }
+
+        return category;
     }
 }

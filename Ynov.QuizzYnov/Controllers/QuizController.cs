@@ -14,7 +14,7 @@ public class QuizController : ControllerBase
     private readonly QuizMapper _mapper;
     private readonly CategoryMapper _categoryMapper;
 
-    public QuizController(IQuizService service, QuizMapper mapper,CategoryMapper categoryMapper)
+    public QuizController(IQuizService service, QuizMapper mapper, CategoryMapper categoryMapper)
     {
         _service = service;
         _mapper = mapper;
@@ -23,40 +23,79 @@ public class QuizController : ControllerBase
 
     [HttpGet(Name = "GetQuiz")]
     [ProducesResponseType(typeof(IEnumerable<QuizDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
+
     public IActionResult GetAll()
     {
-        IEnumerable<QuizDto> dtos = _service.getAll().Select(quiz => _mapper.ToDto(quiz));
+        IEnumerable<QuizDto> dtos = _service.GetAll().Select(quiz => _mapper.ToDto(quiz));
+        if (dtos == null)
+        {
+            var error = new ErrorDto()
+            {
+                ErrorCode = "NotFound",
+                Message = "Quiz not found."
+            };
+            return NotFound(error);
+        }
         return Ok(dtos);
     }
 
     [HttpGet("{id}", Name = "GetQuizId")]
     [ProducesResponseType(typeof(QuizDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public IActionResult GetId(Guid id)
     {
         Quiz dto = _service.GetId(id);
-        if (dto == null) return BadRequest("Quiz not found");
-        QuizDto dtoResponse = _mapper.ToDto(dto);
-        return Ok(dtoResponse);
+        if (dto == null)
+        { 
+            var error = new ErrorDto
+            {
+                ErrorCode = "Invalid id",
+                Message = $"Quiz not found - id: '{id}'"
+            };
+            return NotFound(error);
+        }
+
+        return Ok(dto);
     }
 
     [HttpGet("{id}/question", Name = "GetQuizQuestionById")]
     [ProducesResponseType(typeof(QuizDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public IActionResult GetQuestionByQuiz(Guid id)
     {
-        IEnumerable<Question> dtoQuestion = _service.GetQuestionById(id);
-        if (dtoQuestion == null) return BadRequest("Question not found");
+        IEnumerable<Question>? dtoQuestion = _service.GetQuestionById(id);
+        if (dtoQuestion == null)
+        {
+            var error = new ErrorDto
+            {
+                ErrorCode = "NotFound",
+                Message = $"Quiz question not found - id: '{id}'"
+            };
+            return NotFound(error);
+        }
+
         return Ok(dtoQuestion);
     }
 
     [HttpGet("{id}/category")]
     [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public IActionResult GetQuizCategoryById(Guid id)
     {
-        Category category = _service.GetQuizCategoryById(id);
-        if (category == null) return BadRequest("Category not found");
-         CategoryDto categoryDto = _categoryMapper.ToDto(category);
-       
+        Category? category = _service.GetQuizCategoryById(id);
+        if (category == null)
+        {
+            var error = new ErrorDto()
+            {
+                ErrorCode = "NotFound",
+                Message = $"Quiz category not found - id:'{id}'"
+            };
+            return NotFound(error);
+        }
+
+        CategoryDto categoryDto = _categoryMapper.ToDto(category);
+
         return Ok(categoryDto);
     }
-    
 }
