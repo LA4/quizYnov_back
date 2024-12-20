@@ -34,7 +34,7 @@ public class CategoryService : ICategoryService
 
     public Category GetCategoryById(Guid id)
     {
-        Category? category = _categories.FirstOrDefault(x => x.Id == id);
+        Category? category = _categories.FirstOrDefault(c => c.Id == id);
         if (category == null)
         {
             throw new InvalidOperationException("Category not found");
