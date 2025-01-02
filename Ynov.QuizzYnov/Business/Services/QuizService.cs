@@ -1,4 +1,5 @@
 ﻿using Ynov.QuizzYnov.Business.Models;
+
 namespace Ynov.QuizzYnov.Business.Services;
 
 public class QuizService : IQuizService
@@ -73,11 +74,6 @@ public class QuizService : IQuizService
         }
 
         return quiz;
-    }
-
-    public IEnumerable<Question> GetQuestionById(Guid id)
-    {
-        return GetId(id).Questions;
     }
 
     public Category GetQuizCategoryById(Guid id)

@@ -13,7 +13,7 @@ public class QuizMapper
             Description = quiz.Description,
             Difficulty = quiz.Difficulty,
             Name = quiz.Name,
-            CategoryId = quiz.Category.Id,
+            CategoryName = quiz.Category.Name,
             CreatedAt = quiz.CreateAt
         };
     }

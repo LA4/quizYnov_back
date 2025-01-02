@@ -13,6 +13,7 @@ builder.Services.AddScoped<IQuizService, QuizService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<QuizMapper>();
 builder.Services.AddScoped<CategoryMapper>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
