@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ynov.QuizzYnov.Business;
-using Ynov.QuizzYnov.Business.Models;
 using Ynov.QuizzYnov.Controllers.Dtos;
 using Ynov.QuizzYnov.Controllers.Mappers;
 
@@ -10,9 +9,9 @@ namespace Ynov.QuizzYnov.Controllers;
 [ApiController]
 public class QuizController : ControllerBase
 {
-    private readonly IQuizService _service;
-    private readonly QuizMapper _mapper;
     private readonly CategoryMapper _categoryMapper;
+    private readonly QuizMapper _mapper;
+    private readonly IQuizService _service;
 
     public QuizController(IQuizService service, QuizMapper mapper, CategoryMapper categoryMapper)
     {
@@ -21,16 +20,16 @@ public class QuizController : ControllerBase
         _categoryMapper = categoryMapper;
     }
 
-    [HttpGet(Name = "GetQuiz")]
+    [HttpGet(Name = "GetAllQuizzes")]
     [ProducesResponseType(typeof(IEnumerable<QuizDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public IActionResult GetAll()
+    public IActionResult GetAllQuizzes()
     {
-        IEnumerable<QuizDto> dtos = _service.GetAll().Select(quiz => _mapper.ToDto(quiz));
+        IEnumerable<QuizDto> dtos = _service.GetAllQuizzes().Select(quiz => _mapper.ToDto(quiz));
 
         if (dtos == null)
         {
-            var error = new ErrorDto()
+            var error = new ErrorDto
             {
                 ErrorCode = "NotFound",
                 Message = "Quiz not found."
@@ -44,9 +43,9 @@ public class QuizController : ControllerBase
     [HttpGet("{id}", Name = "GetQuizId")]
     [ProducesResponseType(typeof(QuizDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public IActionResult GetId(Guid id)
+    public IActionResult GetQuizId(Guid id)
     {
-        QuizDto dto = _mapper.ToDto(_service.GetId(id));
+        var dto = _mapper.ToDto(_service.GetQuizId(id));
         if (dto == null)
         {
             var error = new ErrorDto
@@ -66,10 +65,10 @@ public class QuizController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public IActionResult GetQuizCategoryById(Guid id)
     {
-        Category? category = _service.GetQuizCategoryById(id);
+        var category = _service.GetQuizCategoryById(id);
         if (category == null)
         {
-            var error = new ErrorDto()
+            var error = new ErrorDto
             {
                 ErrorCode = "NotFound",
                 Message = $"Quiz category not found - id:'{id}'"
@@ -77,7 +76,7 @@ public class QuizController : ControllerBase
             return NotFound(error);
         }
 
-        CategoryDto categoryDto = _categoryMapper.ToDto(category);
+        var categoryDto = _categoryMapper.ToDto(category);
 
         return Ok(categoryDto);
     }

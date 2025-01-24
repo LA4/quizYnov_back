@@ -1,76 +1,45 @@
-﻿using System.Collections;
-using Ynov.QuizzYnov.Business.Models;
+﻿using Ynov.QuizzYnov.Business.Models;
 
 namespace Ynov.QuizzYnov.Business.Services;
 
 public class QuestionService : IQuestionService
 {
-    private List<Question> _questions = new List<Question>
-    {
-        new Question
-        {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e7b5"),
-            QuestionText = "dans un chateau",
-            AnswerChoice =
-                new List<string>
-                {
-                    "choice1",
-                    "choice2",
-                    "choice3",
-                    "choice4",
-                },
-        },
-        new Question
-        {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e8b5"),
-            QuestionText = "Qu'elle est la  capitale de la bas",
-            AnswerChoice =
-                new List<string>
-                {
-                    "choice1",
-                    "choice2",
-                    "choice3",
-                    "choice4",
-                },
-        },
-        new Question
-        {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e9b5"),
-            QuestionText = "Cest quoi la bas",
-            AnswerChoice =
-                new List<string>
-                {
-                    "choice1",
-                    "choice2",
-                    "choice3",
-                    "choice4",
-                },
-        },
-        new Question
-        {
-            Id = new Guid("f9cfdd6d-6267-42ec-a624-a888f990e2b5"),
-            QuestionText = "Le conemara ?",
-            AnswerChoice = new List<string>
-            {
-                "choice1",
-                "choice2",
-                "choice3",
-                "choice4",
-            },
-        }
-    };
+    private readonly string _questionList = "./Data/questions.csv";
 
-    public IEnumerable<Question> GetQuestion()
+    public IEnumerable<Question> GetAllQuestions()
     {
-        IEnumerable<Question> questions = _questions;
-        if (!questions.Any())
+        return GetQuestionsFromCsv();
+    }
+
+    public IEnumerable<Question> GetQuestionByCategory(Guid categoryId)
+    {
+        var questions = GetQuestionsFromCsv();
+        return questions.Where(q => q.CategoryId == categoryId);
+    }
+
+    private IEnumerable<Question> GetQuestionsFromCsv()
+    {
+        var questions = new List<Question>();
+        var lines = File.ReadAllLines(_questionList);
+        foreach (var line in lines.Skip(1))
         {
-            var error = new Error()
+            char[] charsToTrim = { ' ', '\\', '"' };
+            var columns = line.Split(',');
+            var questiontext = columns[1].Trim(charsToTrim);
+            var answerchoices = columns[2].Trim(charsToTrim);
+            var question = new Question
             {
-                ErrorCode = "NotFound",
-                Message = $"Question list is empty"
+                Id = Guid.Parse(columns[0]),
+                QuestionText = questiontext,
+                AnswerChoice = answerchoices
+                    .Trim('[', ']')
+                    .Split('-')
+                    .Select(choice => choice.Trim(' ', '\'', '\\'))
+                    .ToList(),
+                CategoryId = Guid.Parse(columns[3])
             };
-            throw new InvalidOperationException(error.Message);
+
+            questions.Add(question);
         }
 
         return questions;

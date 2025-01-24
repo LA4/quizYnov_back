@@ -4,42 +4,46 @@ namespace Ynov.QuizzYnov.Business.Services;
 
 public class CategoryService : ICategoryService
 {
-    private readonly List<Category> _categories = new List<Category>
-    {
-        new Category
-        {
-            Id = new Guid("e8fe7125-746e-4219-9db7-a277ea485c29"),
-            Name = "Langages de programmation",
-            CreateAt = DateTime.Now.ToLocalTime()
-        },
-        new Category
-        {
-            Id = new Guid("a877f0cf-0e74-496a-a9cc-20d551622a76"),
-            Name = "Concepts de programmation",
-            CreateAt = DateTime.Now.ToLocalTime()
-        },
-        new Category
-        {
-            Id = new Guid("5be51e2c-7959-43ed-b684-c5ee920fc497"),
-            Name = "APIs et web services",
-            CreateAt = DateTime.Now.ToLocalTime()
-        }
-    };
+    private readonly string _categoriesList = "./Data/categories.csv";
 
 
     public IEnumerable<Category> GetAllCategories()
     {
-        return _categories;
+        return GetCategoriesFromCsv();
     }
 
-    public Category GetCategoryById(Guid id)
+    public Category GetCategoryById(Guid? id)
     {
-        Category? category = _categories.FirstOrDefault(c => c.Id == id);
-        if (category == null)
+        var category = GetCategoriesFromCsv().FirstOrDefault(c => c.Id == id);
+        if (category == null) throw new InvalidOperationException("Category not found");
+        return category;
+    }
+
+    public Category GetCategoryByName(string name)
+    {
+        var category = GetCategoriesFromCsv().FirstOrDefault(c => c.Name == name);
+        if (category == null) throw new InvalidOperationException("Category not found");
+        return category;
+    }
+
+    private IEnumerable<Category> GetCategoriesFromCsv()
+    {
+        var categories = new List<Category>();
+        var lines = File.ReadAllLines(_categoriesList);
+        foreach (var line in lines.Skip(1))
         {
-            throw new InvalidOperationException("Category not found");
+            var columns = line.Split(',');
+
+            var category = new Category
+            {
+                Id = Guid.Parse(columns[0]),
+                Name = columns[1],
+                CreateAt = DateTime.Parse(columns[2])
+            };
+
+            categories.Add(category);
         }
 
-        return category;
+        return categories;
     }
 }

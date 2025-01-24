@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Ynov.QuizzYnov.Business;
 using Ynov.QuizzYnov.Business.Models;
 using Ynov.QuizzYnov.Controllers.Dtos;
@@ -17,22 +16,22 @@ public class QuestionController : ControllerBase
         _service = service;
     }
 
-    [HttpGet(Name = "Question")]
+
+    [HttpGet("{categoryId}", Name = "QuestionByCategory")]
     [ProducesResponseType(typeof(Question), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public IActionResult GetQuestions()
+    public IActionResult GetQuestionByCategory(Guid categoryId)
     {
-        IEnumerable<Question> questions = _service.GetQuestion();
-        if (questions == null)
-        { 
-            var error = new ErrorDto
-            {
-                ErrorCode = "Invalid",
-                Message = $" "
-            };
-            return NotFound(error);
-        }
+        var questions = _service.GetQuestionByCategory(categoryId);
+        return Ok(questions);
+    }
 
+    [HttpGet("", Name = "getAllQuestions")]
+    [ProducesResponseType(typeof(Question), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
+    public IActionResult GetAllQuestions()
+    {
+        var questions = _service.GetAllQuestions();
         return Ok(questions);
     }
 }
