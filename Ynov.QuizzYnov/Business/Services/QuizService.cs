@@ -4,8 +4,13 @@ namespace Ynov.QuizzYnov.Business.Services;
 
 public class QuizService : IQuizService
 {
-    private readonly CategoryService _categoryService;
+    private readonly ICategoryService _categoryService;
     private readonly string _quizList = "./Data/quizzes.csv";
+
+    public QuizService(ICategoryService categoryService)
+    {
+        _categoryService = categoryService;
+    }
 
     public IEnumerable<Quiz> GetAllQuizzes()
     {
@@ -31,8 +36,8 @@ public class QuizService : IQuizService
 
     public Category GetQuizCategoryById(Guid id)
     {
-        var categoryId = GetQuizzesFromCsv().FirstOrDefault(quiz => quiz.Id == id)?.CategoryId;
-        if (categoryId == null)
+        var quiz = GetQuizzesFromCsv().FirstOrDefault(quiz => quiz.CategoryId == id);
+        if (quiz == null)
         {
             var error = new Error
             {
@@ -42,7 +47,7 @@ public class QuizService : IQuizService
             throw new InvalidOperationException(error.Message);
         }
 
-        var category = _categoryService.GetCategoryById(categoryId);
+        var category = _categoryService.GetCategoryById(quiz.CategoryId);
 
 
         return category;

@@ -11,6 +11,11 @@ public class QuestionService : IQuestionService
         return GetQuestionsFromCsv();
     }
 
+    public Question GetQuestionById(Guid questionId)
+    {
+        return GetQuestionsFromCsv().FirstOrDefault(q => q.Id == questionId);
+    }
+
     public IEnumerable<Question> GetQuestionByCategory(Guid categoryId)
     {
         var questions = GetQuestionsFromCsv();

@@ -14,6 +14,10 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<QuizMapper>();
 builder.Services.AddScoped<CategoryMapper>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IResponseService, ResponseService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,4 +32,3 @@ app.MapControllers();
 app.UseHttpsRedirection();
 
 app.Run();
-

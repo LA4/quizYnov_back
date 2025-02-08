@@ -1,13 +1,10 @@
 ﻿using Ynov.QuizzYnov.Business.Models;
-using Ynov.QuizzYnov.Business.Services;
 using Ynov.QuizzYnov.Controllers.Dtos;
 
 namespace Ynov.QuizzYnov.Controllers.Mappers;
 
 public class QuizMapper
 {
-    private readonly QuizService _quizService;
-
     public QuizDto ToDto(Quiz quiz)
     {
         return new QuizDto
@@ -16,7 +13,7 @@ public class QuizMapper
             Description = quiz.Description,
             Difficulty = quiz.Difficulty,
             Name = quiz.Name,
-            CategoryName = _quizService.GetQuizCategoryById(quiz.CategoryId).Name,
+            CategoryId = quiz.CategoryId,
             CreatedAt = quiz.CreateAt
         };
     }
