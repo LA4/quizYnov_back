@@ -36,7 +36,7 @@ public class QuizService : IQuizService
 
     public Category GetQuizCategoryById(Guid id)
     {
-        var quiz = GetQuizzesFromCsv().FirstOrDefault(quiz => quiz.CategoryId == id);
+        var quiz = GetQuizzesFromCsv().FirstOrDefault(q => q.Id == id);
         if (quiz == null)
         {
             var error = new Error

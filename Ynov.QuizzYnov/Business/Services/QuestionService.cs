@@ -29,7 +29,7 @@ public class QuestionService : IQuestionService
         foreach (var line in lines.Skip(1))
         {
             char[] charsToTrim = { ' ', '\\', '"' };
-            var columns = line.Split(',');
+            var columns = line.Split(';');
             var questiontext = columns[1].Trim(charsToTrim);
             var answerchoices = columns[2].Trim(charsToTrim);
             var question = new Question
@@ -38,7 +38,7 @@ public class QuestionService : IQuestionService
                 QuestionText = questiontext,
                 AnswerChoice = answerchoices
                     .Trim('[', ']')
-                    .Split('-')
+                    .Split(',')
                     .Select(choice => choice.Trim(' ', '\'', '\\'))
                     .ToList(),
                 CategoryId = Guid.Parse(columns[3])

@@ -16,6 +16,7 @@ builder.Services.AddScoped<CategoryMapper>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IResponseService, ResponseService>();
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddSingleton<ResponseMapper>();
 
 
 var app = builder.Build();
