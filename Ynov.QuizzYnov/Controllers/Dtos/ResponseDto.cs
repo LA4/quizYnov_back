@@ -2,5 +2,5 @@
 
 public class ResponseDto
 {
-    private bool result;
+    public bool ResponseResult {get; set;}
 }
