@@ -5,7 +5,7 @@ namespace Ynov.QuizzYnov.Business;
 public interface IQuizService
 {
     IEnumerable<Quiz> GetAllQuizzes();
-    Quiz GetQuizId(Guid id);
-    Category GetQuizCategoryById(Guid id);
+    Quiz GetQuizId(int id);
+    Category GetQuizCategoryById(int id);
     IEnumerable<Quiz> GetQuizzesFromCsv();
 }

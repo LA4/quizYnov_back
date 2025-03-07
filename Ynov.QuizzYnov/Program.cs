@@ -1,6 +1,5 @@
 using Ynov.QuizzYnov.Business;
 using Ynov.QuizzYnov.Business.Services;
-using Ynov.QuizzYnov.Controllers.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IQuizService, QuizService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<QuizMapper>();
-builder.Services.AddScoped<CategoryMapper>();
-builder.Services.AddScoped<IQuestionService, QuestionService>();
+// builder.Services.AddScoped<IQuizService, QuizService>();
+// builder.Services.AddScoped<ICategoryService, CategoryService>();
+// builder.Services.AddScoped<QuizMapper>();
+// builder.Services.AddScoped<CategoryMapper>();
+// builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IResponseService, ResponseService>();
-builder.Services.AddScoped<IQuestionService, QuestionService>();
+// builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 
 var app = builder.Build();

@@ -2,8 +2,8 @@
 
 public class Question
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public string QuestionText { get; set; }
-    public List<string> AnswerChoice { get; set; }
-    public Guid CategoryId { get; set; }
+    public ICollection<Responses> AnswerChoice { get; set; }
+    public Quiz Quiz { get; set; }
 }
