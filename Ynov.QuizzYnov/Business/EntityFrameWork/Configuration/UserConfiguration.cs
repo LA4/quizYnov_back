@@ -10,5 +10,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(p => p.Id);
         builder.Property(p => p.userName).IsRequired().HasMaxLength(100);
+        builder.HasMany(user => user.Results).WithOne(resultat => resultat.User);
     }
 }

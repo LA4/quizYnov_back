@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Ynov.QuizzYnov.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCategory : Migration
+    public partial class AddItems : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -25,7 +24,7 @@ namespace Ynov.QuizzYnov.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Quiz",
+                name: "Quizzes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -37,9 +36,9 @@ namespace Ynov.QuizzYnov.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Quiz", x => x.Id);
+                    table.PrimaryKey("PK_Quizzes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Quiz_Categories_CategoryId",
+                        name: "FK_Quizzes_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
@@ -47,7 +46,7 @@ namespace Ynov.QuizzYnov.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Question",
+                name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -57,11 +56,11 @@ namespace Ynov.QuizzYnov.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Question", x => x.Id);
+                    table.PrimaryKey("PK_Questions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Question_Quiz_QuizId",
+                        name: "FK_Questions_Quizzes_QuizId",
                         column: x => x.QuizId,
-                        principalTable: "Quiz",
+                        principalTable: "Quizzes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -70,35 +69,37 @@ namespace Ynov.QuizzYnov.Migrations
                 name: "Responses",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CorrectAnswer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId1 = table.Column<int>(type: "int", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Answer = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    IsValid = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Responses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Responses_Question_QuestionId1",
-                        column: x => x.QuestionId1,
-                        principalTable: "Question",
-                        principalColumn: "Id");
+                        name: "FK_Responses_Questions_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Question_QuizId",
-                table: "Question",
+                name: "IX_Questions_QuizId",
+                table: "Questions",
                 column: "QuizId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Quiz_CategoryId",
-                table: "Quiz",
+                name: "IX_Quizzes_CategoryId",
+                table: "Quizzes",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Responses_QuestionId1",
+                name: "IX_Responses_QuestionId",
                 table: "Responses",
-                column: "QuestionId1");
+                column: "QuestionId");
         }
 
         /// <inheritdoc />
@@ -108,10 +109,10 @@ namespace Ynov.QuizzYnov.Migrations
                 name: "Responses");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "Questions");
 
             migrationBuilder.DropTable(
-                name: "Quiz");
+                name: "Quizzes");
 
             migrationBuilder.DropTable(
                 name: "Categories");
