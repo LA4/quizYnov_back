@@ -13,8 +13,8 @@ builder.Services.AddSwaggerGen();
 // builder.Services.AddScoped<QuizMapper>();
 // builder.Services.AddScoped<CategoryMapper>();
 // builder.Services.AddScoped<IQuestionService, QuestionService>();
-builder.Services.AddScoped<IResponseService, ResponseService>();
-builder.Services.AddScoped<IQuestionService, QuestionService>();
+// builder.Services.AddScoped<IResponseService, ResponseService>();
+// builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 
 var app = builder.Build();

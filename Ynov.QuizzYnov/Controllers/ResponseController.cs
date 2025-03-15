@@ -24,7 +24,7 @@ public class ResponseController : ControllerBase
     }
 
     [HttpGet("{questionId}/{playerResponse}", Name = "getResponseByQuestion")]
-    [ProducesResponseType(typeof(IEnumerable<Responses>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<Response>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public IActionResult GetResponseByQuestion(Guid questionId, string playerResponse)
     {

@@ -4,6 +4,6 @@ namespace Ynov.QuizzYnov.Business;
 
 public interface IResponseService
 {
-    Responses GetResponseByQuestion(Guid questionId);
+    Response GetResponseByQuestion(Guid questionId);
     bool GetResponseResult(Guid questionId, string playerResponse);
 }
