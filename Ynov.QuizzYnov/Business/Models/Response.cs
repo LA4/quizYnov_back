@@ -3,7 +3,7 @@
 public class Response
 {
     public int Id { get; set; }
-    public string ResponseItem { get; set; }
-    public bool IsValid { get; set; }
+    public string Answer { get; set; }
+    public string IsValid { get; set; }
     public Question Question { get; set; }
 }

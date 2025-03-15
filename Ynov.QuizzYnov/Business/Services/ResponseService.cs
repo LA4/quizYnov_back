@@ -6,7 +6,7 @@
 // {
 //     private readonly string _responseList = "./Data/responses.csv";
 //
-//     public Responses GetResponseByQuestion(Guid questionId)
+//     public Response GetResponseByQuestion(Guid questionId)
 //     {
 //         var response = GetresponsesFromCsv();
 //         return response.FirstOrDefault(r => r.QuestionId == questionId);
@@ -21,15 +21,15 @@
 //         return false;
 //     }
 //
-//     private IEnumerable<Responses> GetresponsesFromCsv()
+//     private IEnumerable<Response> GetresponsesFromCsv()
 //     {
-//         var responses = new List<Responses>();
+//         var responses = new List<Response>();
 //         var lines = File.ReadAllLines(_responseList);
 //         foreach (var line in lines.Skip(1))
 //         {
 //             var columns = line.Split(',');
 //
-//             var response = new Responses
+//             var response = new Response
 //             {
 //                 Id = Guid.Parse(columns[0]),
 //                 QuestionId = Guid.Parse(columns[1]),

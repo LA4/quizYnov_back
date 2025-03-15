@@ -8,8 +8,8 @@ public class ResponseConfiguration : IEntityTypeConfiguration<Response>
 {
     public void Configure(EntityTypeBuilder<Response> builder)
     {
-        builder.HasKey(response => response.Id);
-        builder.Property(response => response.IsValid)
-            .IsRequired();
+        builder.HasKey(c => c.Id);
+        builder.Property(response => response.Answer).IsRequired().HasMaxLength(500);
+        builder.Property(response=> response.IsValid).IsRequired();
     }
 }
