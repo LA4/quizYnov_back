@@ -14,7 +14,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<Question> Questions { get; set; }
     public DbSet<Response> Responses { get; set; }
-    public DbSet<Result> Results { get; set; }
+    // public DbSet<Result> Results { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

@@ -3,10 +3,10 @@
 //
 // namespace Ynov.QuizzYnov.Business.EntityFrameWork.AccessData;
 //
-// public class QuizDataAccess(ApplicationDbContext _context)
+// public class ResultDataAcces(ApplicationDbContext _context)
 // {
-//     public async Task<List<Quiz>> GetQuizzesAsync()
+//     public async Task<ICollection<Result>> GetResults()
 //     {
-//         return await _context.Quizzes.ToListAsync();
+//         return await _context.Results.ToListAsync();
 //     }
 // }

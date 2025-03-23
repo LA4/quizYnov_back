@@ -40,5 +40,6 @@ public class QuizController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> CreateQuiz()
     {
+        return Ok("oko");
     }
 }
