@@ -3,7 +3,7 @@
 public class Question
 {
     public int Id { get; set; }
-    public string QuestionText { get; set; }
-    public ICollection<Response> AnswerChoice { get; set; }
-    public Quiz Quiz { get; set; }
+    public virtual string QuestionText { get; set; }
+    public virtual ICollection<Response> AnswerChoice { get; set; }
+    public virtual Quiz Quiz { get; set; }
 }

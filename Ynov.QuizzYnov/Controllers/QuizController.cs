@@ -36,10 +36,11 @@ public class QuizController : ControllerBase
     }
 
     [HttpPost(Name = "CreateQuiz")]
-    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(Quiz), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> CreateQuiz()
+    public async Task<IActionResult> CreateQuiz(Quiz newQuiz)
     {
-        return Ok("oko");
+        newQuiz = await _quizService.AddQuiz(newQuiz);
+        return Ok(newQuiz);
     }
 }
