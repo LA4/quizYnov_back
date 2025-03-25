@@ -142,7 +142,7 @@ namespace Ynov.QuizzYnov.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Result");
+                    b.ToTable("Results");
                 });
 
             modelBuilder.Entity("Ynov.QuizzYnov.Business.Models.User", b =>
@@ -153,10 +153,14 @@ namespace Ynov.QuizzYnov.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("userName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

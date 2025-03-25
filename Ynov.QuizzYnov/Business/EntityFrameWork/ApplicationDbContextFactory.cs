@@ -7,11 +7,11 @@ public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<Applicati
 {
     public ApplicationDbContext CreateDbContext(string[] args)
     {
-        var connectionString ="Server=(localdb)\\MSSQLLocalDB;Initial Catalog=QuizYnov;Integrated Security=True;";
+        var ConnectionString ="Server=(localdb)\\MSSQLLocalDB;Initial Catalog=QuizYnov;Integrated Security=True;";
 
         var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-        builder.UseSqlServer(connectionString);
+        builder.UseSqlServer(ConnectionString);
         return new ApplicationDbContext(builder.Options);
     }
 }
